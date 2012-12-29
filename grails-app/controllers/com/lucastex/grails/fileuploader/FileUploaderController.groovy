@@ -21,8 +21,10 @@ class FileUploaderController {
 		
 		//base path to save file
 		def path = config.path
-		if (!path.endsWith('/'))
-			path = path+"/"
+		 if (!(path.endsWith("/") || path.endsWith("\\")))
+            		path += File.separator
+		//if (!path.endsWith('/'))
+		//	path = path+"/"
 		
 		/**************************
 			check if file exists
@@ -68,7 +70,7 @@ class FileUploaderController {
 		
 		//sets new path
 		def currentTime = System.currentTimeMillis()
-		path = path+currentTime+"/"
+		path = path+"/"
 		if (!new File(path).mkdirs())
 			log.error "FileUploader plugin couldn't create directories: [${path}]"
 		path = path+file.originalFilename
